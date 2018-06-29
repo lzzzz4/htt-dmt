@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cross</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+1111
+</body>
+<script>
+
+    $.ajax({
+        url: "http://localhost:8080/v1/test/lzj",
+        type: "put",
+        data: {},
+        dataType: "json",  //指定服务器返回的数据类型
+        success: function (data) {
+            alert(data.code);
+            alert(data.message)
+        },
+        error: function (data) {
+            alert("error");
+        },
+        xhrFields: {withCredentials: true}
+
+    });
+</script>
+</html>

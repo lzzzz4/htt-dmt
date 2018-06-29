@@ -1,8 +1,8 @@
 package cn.dubidubi.controller;
 
-import com.sun.org.apache.xml.internal.security.Init;
+
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.solr.client.solrj.SolrClient;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -10,9 +10,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.SolrParams;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -68,9 +66,10 @@ public class Solr {
 
 
     public static void query() throws IOException, SolrServerException {
-        SolrQuery SolrQuery = new SolrQuery("follow_comment:大");
-        SolrQuery.set("fq", "text:大三");
-        SolrQuery.set("fq", "username:凤凰");
+        SolrQuery SolrQuery = new SolrQuery("text:*");
+        //SolrQuery.set("fq", "follow_comment:公园");
+        //SolrQuery.addFilterQuery("username:高考");
+        SolrQuery.setSort("id", org.apache.solr.client.solrj.SolrQuery.ORDER.desc);
         // SolrQuery.set("fl", "text,username");
         //高亮
         SolrQuery.setHighlight(true);
@@ -86,12 +85,24 @@ public class Solr {
         for (SolrDocument result : results) {
             System.out.println(result.get("id"));
             Map<String, List<String>> id = highlighting.get(result.get("id"));
-            System.out.println("high:" + id.get("text").get(0));
+            if (id != null) {
+                System.out.println("high:" + id.get("text").get(0));
+            }
             System.out.println("text" + result.get("text"));
             System.out.println("username" + result.get("username"));
             System.out.println("follow_comment" + result.get("follow_comment"));
             System.out.println("-------------------------------");
         }
+    }
+
+
+    public static void delete() throws IOException, SolrServerException {
+        SolrClient.deleteByQuery("text:高考");
+        SolrClient.commit();
+    }
+
+    public static void update() {
+
     }
 
     /**
@@ -102,8 +113,8 @@ public class Solr {
      * @date 18-6-23 下午8:36
      */
     public static void main(String[] args) throws IOException, SolrServerException {
-        //新增
         Init();
+        // delete();
         query();
     }
 }
