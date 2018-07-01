@@ -103,9 +103,9 @@ public class ListExcelUtils {
      * @author lzj
      * @date 18-6-29 下午3:39
      */
-    private static void parseOneExcel(InputStream InputStream, String name, boolean isPrint) throws IOException, FourRowsException {
-        Workbook Workbook = new XSSFWorkbook(InputStream);
-        Sheet sheetAt = Workbook.getSheetAt(0);
+    private static void parseOneExcel(final InputStream InputStream, final String name, final boolean isPrint) throws IOException, FourRowsException {
+        final Workbook Workbook = new XSSFWorkbook(InputStream);
+        final Sheet sheetAt = Workbook.getSheetAt(0);
         int lastRowNum = sheetAt.getLastRowNum();
         boolean isFourRowsTerminate = false;
         //数据库每行都需要有standardFourRows
@@ -156,10 +156,9 @@ public class ListExcelUtils {
      * @date 18-7-1 下午4:32
      */
     private static int setYears(Row row, StandardExcel standardExcel) {
-
         int DataStart = 0;
         boolean IsDataStartTerminate = false;
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         for (int j = 0; j < row.getLastCellNum(); j++) {
             Cell cell = row.getCell(j);
             //为开始行
@@ -188,7 +187,7 @@ public class ListExcelUtils {
      * @date 18-7-1 下午4:33
      */
     private static StandardExcel setStandardFourRows(Sheet Sheet) throws FourRowsException {
-        StandardExcel standardExcel = new StandardExcel();
+        final StandardExcel standardExcel = new StandardExcel();
         //获取row
         for (int i = 0; i < 4; i++) {
             Row Row = Sheet.getRow(i);
